@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="top-bar">
+    <h2>G Notes</h2>
+  </div>
+  <div class="left-sidebar">
+    <ul>
+      <li *ngFor="let data of dataArr, index as i">
+        <p class="title">{{data.title}}</p>
+        <p class="desc">{{data.body}}</p>
+        <a href="javascript:void(0)" class="delete-icon" (click)="onDelete(i)">x</a>
+      </li>
+    </ul>
+  </div>
+  <div class="right-sidebar">
+    <div class="button-block"><a href="javascript:void(0)" class="btn btn-add-note" (click)="onAddNew()"><span>+</span>Add Note</a></div>
+    <form #dataForm="ngForm" (ngSubmit)="onAddData(dataForm.value)" novalidate>
+      <div class="form-input">
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" maxlength="20" #title="ngModel" ngModel required />
+        <div *ngIf="title.invalid && (title.dirty || title.touched)">
+          <small *ngIf="title.errors.required" class="text-red">Please Enter Title</small>
+          <small *ngIf="title.errors.maxlength" class="text-red">Title must be of maximum 20 characters.</small>
+        </div>
+      </div>
+      <div class="form-input">
+        <label for="body">Body</label>
+        <textarea rows="8" id="body" name="body" #body="ngModel" maxlength="50" ngModel required ></textarea>
+        <div *ngIf="body.invalid && (body.dirty || body.touched)">
+          <small *ngIf="body.errors.required" class="text-red">Please Enter Body</small>
+          <small *ngIf="body.errors.maxlength" class="text-red">Body must be of maximum 50 characters.</small>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-save" [disabled]="dataForm.invalid">Save</button>
+    </form>
+  </div>
+</div>
